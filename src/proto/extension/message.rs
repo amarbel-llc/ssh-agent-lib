@@ -25,11 +25,17 @@ pub struct QueryResponse {
 
 impl Encode for QueryResponse {
     fn encoded_len(&self) -> Result<usize, EncodingError> {
-        self.extensions.encoded_len()
+        self.extensions.iter().try_fold(0usize, |acc, s| {
+            acc.checked_add(s.encoded_len()?)
+                .ok_or(EncodingError::Length)
+        })
     }
 
     fn encode(&self, writer: &mut impl Writer) -> Result<(), EncodingError> {
-        self.extensions.encode(writer)
+        for ext in &self.extensions {
+            ext.encode(writer)?;
+        }
+        Ok(())
     }
 }
 
@@ -37,8 +43,10 @@ impl Decode for QueryResponse {
     type Error = ProtoError;
 
     fn decode(reader: &mut impl Reader) -> Result<Self, Self::Error> {
-        let extensions = Vec::<String>::decode(reader)?;
-
+        let mut extensions = Vec::new();
+        while !reader.is_finished() {
+            extensions.push(String::decode(reader)?);
+        }
         Ok(Self { extensions })
     }
 }
@@ -134,6 +142,7 @@ mod tests {
     use testresult::TestResult;
 
     use super::*;
+    use crate::proto::{Extension, Response};
 
     fn round_trip<T>(msg: T) -> TestResult
     where
@@ -145,6 +154,56 @@ mod tests {
 
         let msg2 = T::decode(&mut re_encoded)?;
         assert_eq!(msg, msg2);
+
+        Ok(())
+    }
+
+    #[test]
+    fn query_response_roundtrip() -> TestResult {
+        round_trip(QueryResponse {
+            extensions: vec!["session-bind@openssh.com".into(), "foo@example.com".into()],
+        })
+    }
+
+    #[test]
+    fn query_response_empty_roundtrip() -> TestResult {
+        round_trip(QueryResponse { extensions: vec![] })
+    }
+
+    /// Verify that encoding a QueryResponse through Response::ExtensionResponse
+    /// produces wire bytes identical to OpenSSH's process_ext_query.
+    ///
+    /// Reference: openssh-portable/ssh-agent.c process_ext_query()
+    /// Wire format (after outer message frame):
+    ///   byte    SSH_AGENT_EXTENSION_RESPONSE (29)
+    ///   string  "query"
+    ///   string  "session-bind@openssh.com"
+    ///   [end of message]
+    #[test]
+    fn query_response_matches_openssh_wire_format() -> TestResult {
+        let query = QueryResponse {
+            extensions: vec!["session-bind@openssh.com".into()],
+        };
+        let response = Response::ExtensionResponse(Extension::new_message(query)?);
+
+        let mut buf: Vec<u8> = vec![];
+        response.encode(&mut buf)?;
+
+        #[rustfmt::skip]
+        let expected: &[u8] = &[
+            // byte: SSH_AGENT_EXTENSION_RESPONSE
+            0x1d,
+            // string: "query"
+            0x00, 0x00, 0x00, 0x05,
+            0x71, 0x75, 0x65, 0x72, 0x79,
+            // string: "session-bind@openssh.com"
+            0x00, 0x00, 0x00, 0x18,
+            0x73, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x2d,
+            0x62, 0x69, 0x6e, 0x64, 0x40, 0x6f, 0x70, 0x65,
+            0x6e, 0x73, 0x73, 0x68, 0x2e, 0x63, 0x6f, 0x6d,
+        ];
+
+        assert_eq!(buf, expected);
 
         Ok(())
     }
