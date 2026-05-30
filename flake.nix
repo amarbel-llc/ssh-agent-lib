@@ -27,8 +27,8 @@
           overlays = [ rust-overlay.overlays.default ];
         };
         # Stable toolchain with the extensions the justfile lanes rely on:
-        # clippy (lints), rustfmt (formatting), rust-src (rust-analyzer).
-        # Note: `just formatting` shells out to `cargo +nightly fmt`, which
+        # clippy (lint-rust), rustfmt (lint-fmt-rust), rust-src (rust-analyzer).
+        # Note: `just lint-fmt-rust` shells out to `cargo +nightly fmt`, which
         # assumes a rustup-managed nightly and is not provided here.
         rustToolchain = pkgs.rust-bin.stable.latest.default.override {
           extensions = [
@@ -39,9 +39,9 @@
         };
       in
       {
-        # Devshell for the agent dev-loop: `cargo test --all` (just tests),
-        # `cargo clippy` (just lints), `cargo deny check` (just dependencies),
-        # `codespell` (just spelling), and `just` itself.
+        # Devshell for the agent dev-loop: `cargo test --all` (just test-cargo),
+        # `cargo clippy` (just lint-rust), `cargo deny check` (just validate-deps),
+        # `codespell` (just lint-spelling), and `just` itself.
         devShells.default = pkgs.mkShell {
           packages = [
             rustToolchain

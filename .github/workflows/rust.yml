@@ -36,7 +36,7 @@ jobs:
       - run: rustup install nightly
       - run: rustup component add rustfmt --toolchain nightly
       - name: Check formatting
-        run: just formatting
+        run: just lint-fmt
 
   tests:
     name: Unit tests
@@ -52,7 +52,7 @@ jobs:
       - uses: taiki-e/install-action@just
       - run: just install-packages
       - name: Run unit tests
-        run: just tests
+        run: just test-cargo
 
   deps:
     name: Check dependencies
@@ -76,4 +76,4 @@ jobs:
       - uses: taiki-e/install-action@just
       - run: just install-packages
       - name: Check for lints
-        run: just lints
+        run: just lint-rust
