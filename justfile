@@ -1,6 +1,7 @@
 #!/usr/bin/env -S just --working-directory . --justfile
 # Load project-specific properties (e.g. UBUNTU_PACKAGES) from the `.env` file.
-set dotenv-load
+
+set dotenv-load := true
 
 default: validate lint build test
 
@@ -13,6 +14,7 @@ validate-deps:
     cargo deny check
 
 # Hook-driven (pre-push); kept out of `validate` so the default run ignores history.
+
 # Check each commit in REFS is signed-off and spell-clean.
 [group("pre-build")]
 validate-commits REFS='main..':
@@ -63,6 +65,7 @@ lint-rust:
 build: build-cargo build-docs
 
 # The fuzz member is excluded — its libfuzzer-sys bin needs a sanitizer to link.
+
 # Compile the library plus its examples and tests.
 [group("build")]
 build-cargo:
@@ -91,6 +94,7 @@ codemod-fmt-rust:
     cargo fmt --all
 
 # Formats last because clippy's --fix rewrites can break formatting.
+
 # Auto-fix spelling, rustc, and clippy findings on a staged, clean tree.
 [group("codemod")]
 codemod-fix:
@@ -107,13 +111,13 @@ codemod-fix:
     cargo fmt --all
 
 # Install the system packages the build needs (reads *_PACKAGES from `.env`).
-[linux]
 [group("operational")]
+[linux]
 install-packages:
     sudo apt-get install --assume-yes --no-install-recommends $UBUNTU_PACKAGES
 
+[group("operational")]
 [macos]
 [windows]
-[group("operational")]
 install-packages:
     echo no-op
