@@ -28,8 +28,7 @@
         };
         # Stable toolchain with the extensions the justfile lanes rely on:
         # clippy (lint-rust), rustfmt (lint-fmt-rust), rust-src (rust-analyzer).
-        # Note: `just lint-fmt-rust` shells out to `cargo +nightly fmt`, which
-        # assumes a rustup-managed nightly and is not provided here.
+        # The full `just` lane runs on this stable toolchain — no nightly needed.
         rustToolchain = pkgs.rust-bin.stable.latest.default.override {
           extensions = [
             "rust-src"

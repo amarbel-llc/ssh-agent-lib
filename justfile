@@ -47,10 +47,9 @@ lint-fmt: lint-fmt-just lint-fmt-rust
 lint-fmt-just:
     just --unstable --fmt --check
 
-# Nightly rustfmt — .rustfmt.toml import grouping is nightly-only.
 [group("pre-build")]
 lint-fmt-rust:
-    cargo +nightly fmt --all -- --check
+    cargo fmt --all -- --check
 
 [group("pre-build")]
 lint-spelling:
@@ -87,10 +86,9 @@ codemod-fmt: codemod-fmt-just codemod-fmt-rust
 codemod-fmt-just:
     just --unstable --fmt
 
-# Nightly rustfmt (see lint-fmt-rust).
 [group("codemod")]
 codemod-fmt-rust:
-    cargo +nightly fmt --all
+    cargo fmt --all
 
 # Formats last because clippy's --fix rewrites can break formatting.
 # Auto-fix spelling, rustc, and clippy findings on a staged, clean tree.
@@ -106,7 +104,7 @@ codemod-fix:
     just --unstable --fmt
     cargo fix --allow-staged
     cargo clippy --fix --allow-staged --allow-dirty
-    cargo +nightly fmt --all
+    cargo fmt --all
 
 # Install the system packages the build needs (reads *_PACKAGES from `.env`).
 [linux]

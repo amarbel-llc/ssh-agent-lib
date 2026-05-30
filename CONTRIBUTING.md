@@ -9,8 +9,7 @@ All changes need to:
 
 ## Basic checks
 
-We are using standard Rust ecosystem tools including `rustfmt` and `clippy` with one minor difference.
-Due to a couple of `rustfmt` features being available only in nightly (see the `.rustfmt.toml` file) nightly `rustfmt` is necessary.
+We are using standard Rust ecosystem tools including `rustfmt` and `clippy`.
 
 All of these details are captured in a `justfile` and can be checked by running [`just`'](https://just.systems/).
 

@@ -3,11 +3,8 @@
 [hooks]
 # Override the inherited `just build-nix` (eng/sweatfile): this is a Rust
 # crate with no build-nix recipe. Plain `just` runs the default lane
-# (validate lint build test) as the pre-merge gate.
-#
-# Note: the `lint` lane shells out to `cargo +nightly fmt`, so the merge
-# environment needs a rustup-managed nightly rustfmt (the nix devshell
-# intentionally does not provide one).
+# (validate lint build test) as the pre-merge gate, entirely on the nix
+# devshell's stable toolchain.
 pre-merge = "just"
 
 # [[pre-merge-skills]] (simplify, review, eng:loose-ends) are inherited
