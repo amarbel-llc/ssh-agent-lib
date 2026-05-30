@@ -1,6 +1,6 @@
-# These rustfmt options are nightly-only. The justfile fmt lanes run on stable
-# rustfmt (the nix devshell's toolchain), so they're disabled here. Re-enable
-# under `cargo +nightly fmt` if/when they stabilize — tracking issues below.
-#
-# group_imports = "StdExternalCrate"      # rustfmt#5083
-# format_code_in_doc_comments = true      # rustfmt#3348
+# Group imports into std / external / crate blocks, and format code blocks
+# inside doc comments. Both are stable as of rustfmt 1.9.0 (they stabilized
+# the features tracked by rustfmt#5083 and rustfmt#3348). Older stable
+# toolchains warn-and-ignore these rather than enforce them.
+group_imports = "StdExternalCrate"
+format_code_in_doc_comments = true
