@@ -17,6 +17,7 @@
       nixpkgs,
       utils,
       rust-overlay,
+      ...
     }:
     utils.lib.eachDefaultSystem (
       system:
