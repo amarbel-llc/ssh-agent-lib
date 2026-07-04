@@ -10,7 +10,7 @@
 use clap::Parser;
 use service_binding::Binding;
 use ssh_agent_lib::{
-    agent::{bind, Agent, Session},
+    agent::{Agent, Session, bind},
     error::AgentError,
     proto::Identity,
 };

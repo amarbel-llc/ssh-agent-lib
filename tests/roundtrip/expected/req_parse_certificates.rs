@@ -2,7 +2,7 @@ use hex_literal::hex;
 use ssh_agent_lib::proto::{
     AddIdentity, AddIdentityConstrained, KeyConstraint, PrivateCredential, PrivateKeyData, Request,
 };
-use ssh_key::{private::RsaPrivateKey, Algorithm, Mpint};
+use ssh_key::{Algorithm, Mpint, private::RsaPrivateKey};
 
 use super::fixtures;
 

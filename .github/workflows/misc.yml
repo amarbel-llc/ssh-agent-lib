@@ -4,8 +4,8 @@ on:
   pull_request:
   push:
     tags:
-      - 'v*'
-    branches: [ main ]
+      - "v*"
+    branches: [main]
   workflow_dispatch:
 
 concurrency:
@@ -21,12 +21,12 @@ jobs:
     strategy:
       matrix:
         include:
-        - os: windows-latest
-          script: ".\\tests\\sign-and-verify-win.bat"
-        - os: ubuntu-latest
-          script: ./tests/sign-and-verify.sh
-        - os: macos-latest
-          script: ./tests/sign-and-verify.sh
+          - os: windows-latest
+            script: ".\\tests\\sign-and-verify-win.bat"
+          - os: ubuntu-latest
+            script: ./tests/sign-and-verify.sh
+          - os: macos-latest
+            script: ./tests/sign-and-verify.sh
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4

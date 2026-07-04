@@ -3,8 +3,8 @@
 use ssh_encoding::{self, CheckedSum, Decode, Encode, Reader, Writer};
 
 use crate::proto::{
-    extension::{KeyConstraintExtension, MessageExtension},
     Error, Result, Unparsed,
+    extension::{KeyConstraintExtension, MessageExtension},
 };
 
 /// Container for SSH agent protocol extension messages

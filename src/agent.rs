@@ -266,10 +266,10 @@ pub trait Session: 'static + Sync + Send + Unpin {
     async fn handle(&mut self, message: Request) -> Result<Response, AgentError> {
         match message {
             Request::RequestIdentities => {
-                return Ok(Response::IdentitiesAnswer(self.request_identities().await?))
+                return Ok(Response::IdentitiesAnswer(self.request_identities().await?));
             }
             Request::SignRequest(request) => {
-                return Ok(Response::SignResponse(self.sign(request).await?))
+                return Ok(Response::SignResponse(self.sign(request).await?));
             }
             Request::AddIdentity(identity) => self.add_identity(identity).await?,
             Request::RemoveIdentity(identity) => self.remove_identity(identity).await?,
@@ -286,7 +286,7 @@ pub trait Session: 'static + Sync + Send + Unpin {
                 return match self.extension(extension).await? {
                     Some(response) => Ok(Response::ExtensionResponse(response)),
                     None => Ok(Response::Success),
-                }
+                };
             }
         }
         Ok(Response::Success)

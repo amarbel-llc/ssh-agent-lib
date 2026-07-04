@@ -1,4 +1,4 @@
-use ssh_agent_lib::proto::{extension::MessageExtension, Identity, ProtoError};
+use ssh_agent_lib::proto::{Identity, ProtoError, extension::MessageExtension};
 use ssh_encoding::{CheckedSum, Decode, Encode, Reader, Writer};
 
 pub struct RequestDecryptIdentities;

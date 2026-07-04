@@ -4,8 +4,8 @@ on:
   pull_request:
   push:
     tags:
-      - 'v*'
-    branches: [ main ]
+      - "v*"
+    branches: [main]
   workflow_dispatch:
 
 concurrency:
@@ -26,9 +26,9 @@ jobs:
     strategy:
       matrix:
         include:
-        - os: ubuntu-latest
-        - os: macos-latest
-        - os: windows-latest
+          - os: ubuntu-latest
+          - os: macos-latest
+          - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v6
@@ -41,9 +41,9 @@ jobs:
     strategy:
       matrix:
         include:
-        - os: ubuntu-latest
-        - os: macos-latest
-        - os: windows-latest
+          - os: ubuntu-latest
+          - os: macos-latest
+          - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v6
@@ -65,9 +65,9 @@ jobs:
     strategy:
       matrix:
         include:
-        - os: ubuntu-latest
-        - os: macos-latest
-        - os: windows-latest
+          - os: ubuntu-latest
+          - os: macos-latest
+          - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v6

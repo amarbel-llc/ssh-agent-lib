@@ -14,13 +14,13 @@ ssh-keygen -t rsa -f id_rsa -N ""
 export SSH_AUTH_SOCK=ssh-agent.sock
 ssh-add id_rsa
 ssh-add -L | tee agent.pub
-ssh-keygen -Y sign -f agent.pub -n file < Cargo.toml > Cargo.toml.sig
-ssh-keygen -Y check-novalidate -n file -f agent.pub -s Cargo.toml.sig < Cargo.toml
+ssh-keygen -Y sign -f agent.pub -n file <Cargo.toml >Cargo.toml.sig
+ssh-keygen -Y check-novalidate -n file -f agent.pub -s Cargo.toml.sig <Cargo.toml
 
 rm -rf Cargo.toml.sig agent.pub
 
 # Test other commands:
-export SSH_ASKPASS=`pwd`/tests/pwd-test.sh
+export SSH_ASKPASS=$(pwd)/tests/pwd-test.sh
 # AddSmartcardKey
 echo | ssh-add -s test
 # AddSmartcardKeyConstrained

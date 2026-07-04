@@ -1,8 +1,8 @@
 use hex_literal::hex;
 use ssh_encoding::Decode;
 use ssh_key::{
-    private::{EcdsaKeypair, EcdsaPrivateKey},
     Certificate,
+    private::{EcdsaKeypair, EcdsaPrivateKey},
 };
 
 pub fn demo_key() -> EcdsaKeypair {
