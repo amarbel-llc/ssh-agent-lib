@@ -1,0 +1,16 @@
+# conformist config for ssh-agent-lib. This file exists primarily to SHADOW
+# eng's baked catch-all: the cwd-aware conformist wrapper (and the
+# eng-sweatfile pre-commit/repair hooks built on it) prefers a root
+# conformist.toml and otherwise falls back to eng's config — whose
+# [formatter.rustfmt] (a different rustfmt build, forced --edition 2024)
+# silently reformatted staged .rs files at commit time to an import ordering
+# this repo's own `cargo fmt` gate (lint-fmt-rust, rust-overlay's rustfmt +
+# ./rustfmt.toml) then rejects. Rust formatting is owned EXCLUSIVELY by the
+# justfile cargo-fmt lanes (codemod-fmt-rust / lint-fmt-rust); no formatter
+# here matches *.rs, so conformist consumers leave Rust alone. Keep this
+# formatters-only: linters declared here would hard-fail eng's fallback
+# wrapper at init (conformist#75).
+
+[formatter.nixfmt]
+command = "nixfmt"
+includes = ["*.nix"]

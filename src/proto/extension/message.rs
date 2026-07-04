@@ -6,7 +6,7 @@
 
 use signature::Verifier;
 use ssh_encoding::{CheckedSum, Decode, Encode, Error as EncodingError, Reader, Writer};
-use ssh_key::{Signature, public::KeyData};
+use ssh_key::{public::KeyData, Signature};
 
 use super::MessageExtension;
 use crate::proto::ProtoError;

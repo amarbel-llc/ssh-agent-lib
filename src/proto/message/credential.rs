@@ -4,7 +4,7 @@ use std::str::FromStr as _;
 
 use ssh_encoding::{self, CheckedSum, Decode, Encode, Reader, Writer};
 use ssh_key::public::KeyData;
-use ssh_key::{Algorithm, certificate::Certificate, private::KeypairData};
+use ssh_key::{certificate::Certificate, private::KeypairData, Algorithm};
 
 use crate::proto::{Error, PrivateKeyData, Result};
 

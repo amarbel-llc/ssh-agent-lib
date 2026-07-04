@@ -8,17 +8,17 @@ use rsa::signature::{RandomizedSigner, SignatureEncoding};
 use sha1::Sha1;
 #[cfg(windows)]
 use ssh_agent_lib::agent::NamedPipeListener as Listener;
-use ssh_agent_lib::agent::{Session, listen};
+use ssh_agent_lib::agent::{listen, Session};
 use ssh_agent_lib::error::AgentError;
 use ssh_agent_lib::proto::extension::{QueryResponse, RestrictDestination, SessionBind};
 use ssh_agent_lib::proto::{
-    AddIdentity, AddIdentityConstrained, AddSmartcardKeyConstrained, Extension, KeyConstraint,
-    PrivateCredential, RemoveIdentity, SignRequest, SmartcardKey, message, signature,
+    message, signature, AddIdentity, AddIdentityConstrained, AddSmartcardKeyConstrained, Extension,
+    KeyConstraint, PrivateCredential, RemoveIdentity, SignRequest, SmartcardKey,
 };
 use ssh_key::{
-    Algorithm, Signature,
     private::{KeypairData, PrivateKey},
     public::PublicKey,
+    Algorithm, Signature,
 };
 #[cfg(not(windows))]
 use tokio::net::UnixListener as Listener;

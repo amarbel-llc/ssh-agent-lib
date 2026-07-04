@@ -10,9 +10,9 @@
 use clap::Parser;
 use service_binding::Binding;
 use ssh_agent_lib::{
+    agent::bind,
     agent::Agent,
     agent::Session,
-    agent::bind,
     async_trait,
     client::connect,
     error::AgentError,

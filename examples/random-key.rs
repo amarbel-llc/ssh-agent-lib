@@ -8,15 +8,15 @@ use rsa::signature::{RandomizedSigner, SignatureEncoding};
 use sha1::Sha1;
 #[cfg(windows)]
 use ssh_agent_lib::agent::NamedPipeListener as Listener;
-use ssh_agent_lib::agent::{Session, listen};
+use ssh_agent_lib::agent::{listen, Session};
 use ssh_agent_lib::error::AgentError;
-use ssh_agent_lib::proto::{Identity, PublicCredential, SignRequest, signature};
-use ssh_key::HashAlg;
+use ssh_agent_lib::proto::{signature, Identity, PublicCredential, SignRequest};
 use ssh_key::private::RsaKeypair;
+use ssh_key::HashAlg;
 use ssh_key::{
-    Algorithm, Signature,
     private::{KeypairData, PrivateKey},
     public::PublicKey,
+    Algorithm, Signature,
 };
 #[cfg(not(windows))]
 use tokio::net::UnixListener as Listener;

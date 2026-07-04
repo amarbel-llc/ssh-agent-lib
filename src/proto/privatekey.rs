@@ -4,8 +4,8 @@ use core::fmt;
 
 use ssh_encoding::{Decode, Encode, Reader, Writer};
 use ssh_key::{
-    Algorithm, EcdsaCurve, Error, Result,
     private::{self, DsaPrivateKey, Ed25519Keypair, RsaPrivateKey},
+    Algorithm, EcdsaCurve, Error, Result,
 };
 use subtle::{Choice, ConstantTimeEq};
 
