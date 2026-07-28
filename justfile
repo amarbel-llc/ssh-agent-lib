@@ -8,14 +8,14 @@ default: validate lint build test
 [group("pre-build")]
 validate: validate-deps
 
-# Advisory, license, and ban-policy gate via cargo-deny.
+# advisory, license, and ban-policy gate via cargo-deny
 [group("pre-build")]
 validate-deps:
     cargo deny check
 
 # Hook-driven (pre-push); kept out of `validate` so the default run ignores history.
 
-# Check each commit in REFS is signed-off and spell-clean.
+# check each commit in REFS is signed-off and spell-clean
 [group("pre-build")]
 validate-commits REFS='main..':
     #!/usr/bin/env bash
@@ -66,7 +66,7 @@ build: build-cargo build-docs
 
 # The fuzz member is excluded — its libfuzzer-sys bin needs a sanitizer to link.
 
-# Compile the library plus its examples and tests.
+# compile the library plus its examples and tests
 [group("build")]
 build-cargo:
     cargo build --package ssh-agent-lib --all-targets
@@ -95,7 +95,7 @@ codemod-fmt-rust:
 
 # Formats last because clippy's --fix rewrites can break formatting.
 
-# Auto-fix spelling, rustc, and clippy findings on a staged, clean tree.
+# auto-fix spelling, rustc, and clippy findings on a staged, clean tree
 [group("codemod")]
 codemod-fix:
     #!/usr/bin/env bash
@@ -110,7 +110,7 @@ codemod-fix:
     cargo clippy --fix --allow-staged --allow-dirty
     cargo fmt --all
 
-# Install the system packages the build needs (reads *_PACKAGES from `.env`).
+# install the system packages the build needs (reads *_PACKAGES from `.env`)
 [group("operational")]
 [linux]
 install-packages:
